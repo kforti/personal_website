@@ -15,18 +15,20 @@ import os
 
 from dotenv import load_dotenv
 
-env_path = Path(__file__).parent.parent.joinpath('env', '.env')
-load_dotenv(env_path)
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+ENV_PATH = BASE_DIR / 'env' / '.env'
+print(ENV_PATH)
+load_dotenv(ENV_PATH)
+print(os.environ)
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-m55@yw%vcvz$xle6o7om0k3)(4kvr5e=i08&2(4qr5(nv=k93i'
+SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -43,6 +45,13 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
+    # Local
+    'projects.apps.ProjectsConfig',
+    'api.apps.ApiConfig',
+
+    # 3rd party
+    'rest_framework',
 ]
 
 MIDDLEWARE = [
